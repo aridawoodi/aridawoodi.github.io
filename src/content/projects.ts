@@ -1,11 +1,5 @@
 import type { Project, ScriptNote } from "./types";
 
-/**
- * Add a project by appending to `projects` or `scripts`.
- * Projects render as case studies. Scripts render as short public notes.
- * Keep claims tied to the repository or the resume. Do not add metrics
- * that are not already documented.
- */
 export const projects: Project[] = [
   {
     id: "tableedge",
