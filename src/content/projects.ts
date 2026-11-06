@@ -10,15 +10,15 @@ export const projects: Project[] = [
   {
     id: "tableedge",
     name: "TableEdge",
-    status: "In production",
+    status: "Shipped",
     live: true,
     sentence:
-      "A restaurant operations app for administration, sales tracking, and cost and EBITDA reporting.",
+      "A restaurant operations app I shipped for administration, sales tracking, and cost and EBITDA reporting.",
     problem:
       "A restaurant’s sales, cost, and accounting numbers start in different products. Staff end up reconciling them by hand.",
     does: "TableEdge is a multi-tenant web app. It pulls point-of-sale and accounting data into one place for administration, sales tracking, and cost and EBITDA reporting.",
     contribution:
-      "Personal project I design and ship on weekends. My resume states that it is in production with one paying restaurant customer. The repository is private; I can walk through it in an interview. Agent flows in the product were built through iterative prompt design.",
+      "I built TableEdge and shipped it. It is live at tableedge.io, with one paying restaurant customer. I designed the agent flows through prompt work with Claude. The source is private.",
     capabilities: ["Applications", "Data", "Cloud", "Automation", "AI"],
     stack: [
       {
@@ -35,11 +35,11 @@ export const projects: Project[] = [
       },
       {
         name: "Toast, Square, and QuickBooks",
-        why: "Those are the operational sources: point-of-sale sales and accounting data, rather than a generic file upload.",
+        why: "Toast, Square, and QuickBooks supply the sales and accounting data.",
       },
       {
         name: "Stripe and Plaid",
-        why: "The codebase includes billing and bank-link surfaces. I am not publishing revenue or transaction volume.",
+        why: "Stripe handles billing. Plaid connects bank accounts.",
       },
     ],
     flow: [
@@ -51,26 +51,21 @@ export const projects: Project[] = [
     ],
     decisions: [
       "One TypeScript application owns both the screens and the request handlers, so permission rules are checked in the same repository as the interface.",
-      "CI on pull requests runs lint, a typecheck, middleware route coverage, API permission gates, a secret scan, unit tests with a coverage floor, and a production build. Dependency audit runs on the way to main and weekly, after Actions minutes were being spent retesting the same commits.",
-      "The product is restaurant-specific. The screens cover sales, budget, documents, compliance, and data health rather than a generic admin template.",
+      "On pull requests, CI runs lint, a typecheck, middleware coverage, API permission checks, a secret scan, unit tests, and a production build. I run the dependency audit on the way to main, and weekly.",
+      "The screens cover restaurant sales, budget, documents, compliance, and data health.",
     ],
     implemented: [
       "Authenticated multi-tenant app with organization administration.",
-      "Sales, budget, documents, compliance, and data-health areas in the app.",
-      "Integration surfaces for Toast, Square, QuickBooks, and additional connectors present in the source.",
-      "Stripe billing and Plaid bank linking in the codebase.",
-      "Agent flows built through iterative prompt design.",
-      "A public site at tableedge.io.",
-    ],
-    notClaimed: [
-      "I do not publish a user count beyond the one paying restaurant customer stated on my resume.",
-      "I do not claim a measured revenue or performance delta.",
-      "Commit history includes AI-assisted development. I do not describe every line as hand-written.",
+      "Sales, budget, documents, compliance, and data health.",
+      "Toast, Square, and QuickBooks integrations.",
+      "Stripe billing and Plaid bank linking.",
+      "Agent flows designed through prompt work with Claude.",
+      "Public site at tableedge.io.",
     ],
     links: [
       { label: "tableedge.io", href: "https://tableedge.io" },
       {
-        label: "Private source, on request",
+        label: "Email for the source",
         href: "mailto:aridawoodii@gmail.com?subject=TableEdge%20source",
       },
     ],
@@ -86,7 +81,7 @@ export const projects: Project[] = [
       "Most application tools give away autofill and charge for the writing, because the model runs on their server and the resume leaves the machine.",
     does: "It builds a profile from a PDF or Word resume, fills supported application forms, drafts open-ended answers, tailors the resume, and writes cover letters. It never presses Submit.",
     contribution:
-      "I built and published it. It is MIT licensed, listed on the Chrome Web Store, and has a public site on GitHub Pages. A desktop companion in a separate repository is still in progress and is not this extension.",
+      "I built it and published it. It is free, MIT licensed, and on the Chrome Web Store. A separate desktop version, using Electron and Playwright, is still in progress.",
     capabilities: ["Applications", "Automation", "AI"],
     stack: [
       {
@@ -126,10 +121,6 @@ export const projects: Project[] = [
       "Unit tests in CI, plus a larger set of local end-to-end harnesses.",
       "Chrome Web Store listing and a GitHub Pages site.",
     ],
-    notClaimed: [
-      "I do not publish install counts or a claim that it outperforms larger commercial tools on site coverage.",
-      "The desktop app (Electron, TypeScript, Playwright, and Ollama) is a separate in-progress repository. It is not the shipped extension, and I am not presenting it as a finished release.",
-    ],
     links: [
       {
         label: "Website",
@@ -156,12 +147,12 @@ export const projects: Project[] = [
       "A shared game needs one board that every player sees, including people who do not want to make an account.",
     does: "Players create a game, share a code, enter scores, and see updates as other devices write. Guest play and signed-in profiles both exist, with history and player statistics.",
     contribution:
-      "I built the iOS app. My resume refers to it as ScoreBoard Sync Pro. The repository is private, and I do not have a public store link to offer here.",
+      "I built ScoreBoard. On my resume it is ScoreBoard Sync Pro. The source is private.",
     capabilities: ["Applications", "Cloud"],
     stack: [
       {
         name: "SwiftUI",
-        why: "The client is a native iOS app, organized as models, views, and view models rather than a wrapped website.",
+        why: "Native SwiftUI, structured as models, views, and view models.",
       },
       {
         name: "Amazon Cognito",
@@ -194,14 +185,11 @@ export const projects: Project[] = [
       "Guest mode, Cognito sign-in, and profile management.",
       "Player statistics and historical games.",
       "A macOS GitHub Actions build and test workflow.",
-    ],
-    notClaimed: [
-      "No public App Store link is listed because I am not putting an unverified store URL on this site.",
-      "S3 is in the project for user assets. I am not describing a content platform beyond that.",
+      "User assets stored in S3.",
     ],
     links: [
       {
-        label: "Private source, on request",
+        label: "Email for the source",
         href: "mailto:aridawoodii@gmail.com?subject=ScoreBoard%20source",
       },
     ],
@@ -214,10 +202,10 @@ export const projects: Project[] = [
     sentence:
       "A small app that answers policy questions from source passages, locally or through Azure.",
     problem:
-      "A grounded assistant has to show where an answer came from, and it has to refuse questions the documents do not cover. This repository is a verified slice of that path, not a production system.",
-    does: "A person asks a question. The API retrieves fictional policy passages and either returns the excerpts or, in Azure mode, asks a model to answer from those passages. Unsupported questions are part of the demo.",
+      "Someone asking a policy question needs the passages behind the answer, and a stop when the documents do not cover it.",
+    does: "The person asks a question. The API retrieves fictional policy passages and either returns the excerpts or, in Azure mode, answers from those passages.",
     contribution:
-      "I built the proof of concept. Local mode, the Azure retrieval path, and Entra sign-in are implemented. Cloud hosting for the app is still pending. The repository is private.",
+      "I built this to learn grounded retrieval on Azure. Local excerpts, Azure search, and Entra sign-in work. I have not deployed it. The source is private.",
     capabilities: ["Applications", "Cloud", "AI"],
     stack: [
       {
@@ -245,9 +233,9 @@ export const projects: Project[] = [
       "Sources on screen",
     ],
     decisions: [
-      "Local mode returns exact excerpts so the retrieval path can be explained without an Azure account. Azure mode is a separate, verified provider switch, not a mock.",
-      "Authentication and the model provider are separate settings. A localhost demo can run without sign-in. The server refuses to start a public deployment with authentication disabled.",
-      "The corpus is six fictional passages that are already small chunks. PDF ingestion is intentionally later.",
+      "Local mode returns the exact passages, so I can show the path without an Azure account. Azure mode runs hybrid search and writes the answer from those passages.",
+      "Sign-in and the model are separate. A local demo can run without login. The server will not start a public deployment with authentication off.",
+      "The sample set is six short fictional passages. PDF ingestion is the next step.",
     ],
     implemented: [
       "Question form with source inspection, loading, and error states.",
@@ -255,17 +243,11 @@ export const projects: Project[] = [
       "Azure hybrid retrieval and grounded generation, verified against real Azure resources.",
       "Azure AI Search excerpt mode that does not call OpenAI.",
       "Entra sign-in and a Policy.Reader role check.",
-      "Tests around auth and retrieval. The repository itself says those tests are not a full evaluation.",
-    ],
-    notClaimed: [
-      "No deployed application hosting, uploaded documents, tenant separation, or streaming.",
-      "Citations are prompted, not mechanically verified. Azure abstention depends on the model.",
-      "The rate limit is per process and IP. It is not a distributed control.",
-      "An agent that drafts a checklist and waits for approval is described as future work. This is a fixed retrieval pipeline.",
+      "Tests for authentication and retrieval.",
     ],
     links: [
       {
-        label: "Private source, on request",
+        label: "Email for the source",
         href: "mailto:aridawoodii@gmail.com?subject=Policy%20assistant%20source",
       },
     ],

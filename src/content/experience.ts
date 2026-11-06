@@ -21,8 +21,8 @@ export const roles: Role[] = [
       "Modeled a process in Dataverse and delivered a model-driven app so records that lived in separate spreadsheets sit in one governed source.",
       "Push events to BigPanda for alerting, and add features requested through Jira and Confluence ticket flows.",
       "Automate daily and monthly reports with Python and openpyxl, and build databases from multiple endpoints for Power BI.",
-      "Use pay-as-you-go cloud services where that keeps cost down. I do not attach a savings number to that.",
-      "Use Claude Code, GitHub Copilot, and Cursor on internal tooling. The agents do not replace the design of the system.",
+      "Use pay-as-you-go cloud services where that keeps cost down.",
+      "Use Claude Code, GitHub Copilot, and Cursor while I build internal tools.",
     ],
   },
   {
@@ -32,7 +32,7 @@ export const roles: Role[] = [
     when: "2022–2023",
     place: "Nashville, TN",
     summary:
-      "Taught Excel and Power BI through formulas, pivot tables, VBA, dashboards, DAX, and Query Editor, using real data rather than isolated exercises.",
+      "Taught Excel and Power BI with formulas, pivot tables, VBA, dashboards, DAX, and Query Editor, using real data.",
   },
   {
     id: "nss",
@@ -50,7 +50,7 @@ export const roles: Role[] = [
     when: "2014–2020",
     place: "Nashville, TN",
     summary:
-      "Ran daily operations, personnel records, and inventory, and analyzed sales in Excel for the general manager. That operations context is part of why TableEdge is a restaurant product.",
+      "Ran daily operations, personnel records, and inventory, and analyzed sales in Excel for the general manager.",
   },
   {
     id: "kirkuk-admin",

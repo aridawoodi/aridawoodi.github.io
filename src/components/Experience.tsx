@@ -21,9 +21,9 @@ export function Experience() {
           From operations work to the systems that run it
         </h2>
         <p className="section-intro">
-          The engineering record starts at Asurion in 2021. Earlier roles are
-          on the page because they are part of the career, not because they are
-          software projects.
+          I have been a software engineer at Asurion since 2021. Before that I
+          taught analytics, trained in data, and worked in restaurant and office
+          operations.
         </p>
       </div>
       <article className="role role-current">

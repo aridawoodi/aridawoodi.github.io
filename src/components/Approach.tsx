@@ -7,9 +7,8 @@ export function Approach() {
         <p className="eyebrow">04 — Approach</p>
         <h2 id="approach-heading">How I decide what to build</h2>
         <p className="section-intro">
-          The pattern across the job is practical: understand the operational
-          problem, choose the system that fits the constraint, and leave a path
-          that can be tested and deployed again.
+          I start from the operational problem, pick the system that fits, and
+          leave a path I can test and deploy again.
         </p>
       </div>
       <ol className="approach-list">

@@ -49,15 +49,9 @@ function CaseStudy({ project }: { project: Project }) {
           </ul>
         </div>
         <div>
-          <h4>In the repository</h4>
+          <h4>What I built</h4>
           <ul>
             {project.implemented.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <h4>Not claimed</h4>
-          <ul>
-            {project.notClaimed.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
@@ -109,11 +103,10 @@ export function Work() {
     <section className="section" id="work" aria-labelledby="work-heading">
       <div className="section-head">
         <p className="eyebrow">01 — Work</p>
-        <h2 id="work-heading">Selected systems</h2>
+        <h2 id="work-heading">Selected work</h2>
         <p className="section-intro">
-          Four projects are enough to show the range. Each row is the short
-          version. The case study is there when the stack, or the limit of the
-          work, matters.
+          Applications, data pipelines, and tools I have shipped or built in
+          depth. Open a project for the technical detail.
         </p>
       </div>
       <div className="filters" role="toolbar" aria-label="Filter projects">
@@ -143,9 +136,7 @@ export function Work() {
         })}
       </div>
       <p className="filter-status" aria-live="polite">
-        {filter === "All"
-          ? `${visible.length} projects.`
-          : `${visible.length} ${visible.length === 1 ? "project" : "projects"} involving ${filter.toLowerCase()}.`}
+        {filter === "All" ? "All work" : filter}
       </p>
       <div className="project-list">
         {visible.map((project, index) => {
@@ -187,7 +178,7 @@ export function Work() {
                   aria-controls={panelId}
                   onClick={() => toggle(project)}
                 >
-                  {open ? "Close case study" : "Read case study"}
+                  {open ? "Close" : "Project details"}
                 </button>
                 {project.links.slice(0, 2).map((link) => (
                   <a
@@ -212,10 +203,9 @@ export function Work() {
       </div>
       {filter === "All" ? (
         <div className="scripts">
-          <h3>Smaller public scripts</h3>
+          <h3>Earlier scripts</h3>
           <p>
-            These are earlier restaurant automations. They are real, and they
-            are not the work I want judged first.
+            Restaurant scripts I wrote before TableEdge.
           </p>
           <ul>
             {scripts.map((script) => (

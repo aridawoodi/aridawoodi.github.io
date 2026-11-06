@@ -7,8 +7,8 @@ export function Contact() {
         <p className="eyebrow">05 — Contact</p>
         <h2 id="contact-heading">If the work fits, write.</h2>
         <p className="section-intro">
-          I am looking across software engineering, cloud and delivery, and
-          data. The same record supports all three. English, Arabic, and Kurdish.
+          I am looking for software engineering, cloud, and data roles. I speak
+          English, Arabic, and Kurdish.
         </p>
       </div>
       <ul className="contact-list">
@@ -33,8 +33,7 @@ export function Contact() {
         </li>
       </ul>
       <p className="colophon">
-        Ari Dawoodi · Nashville. Project notes on this site are limited to the
-        resume and repositories I can account for.
+        Ari Dawoodi · Nashville
       </p>
     </section>
   );

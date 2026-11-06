@@ -34,7 +34,6 @@ export type Project = {
   flow?: string[];
   decisions: string[];
   implemented: string[];
-  notClaimed: string[];
   links: ProjectLink[];
 };
 

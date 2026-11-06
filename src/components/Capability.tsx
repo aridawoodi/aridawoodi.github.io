@@ -9,10 +9,10 @@ export function Capability() {
     >
       <div className="section-head">
         <p className="eyebrow">02 — Capability</p>
-        <h2 id="capability-heading">Tools, next to the work that uses them</h2>
+        <h2 id="capability-heading">What I use</h2>
         <p className="section-intro">
-          The list is limited to what shows up in the resume or in a repository
-          I can account for. Working knowledge is labeled as working knowledge.
+          Languages and platforms from my job at Asurion and from the projects
+          above.
         </p>
       </div>
       <div className="skill-list">
