@@ -1,0 +1,685 @@
+:root {
+  --bg: #f3f4f1;
+  --ink: #1a1d19;
+  --muted: #5c635c;
+  --line: #d5d8d2;
+  --paper: #fcfcfb;
+  --pine: #0c5c48;
+  --pine-soft: #e5f2ed;
+  --focus: #0c5c48;
+  --sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --measure: 68ch;
+  --page: min(1120px, calc(100% - 2.5rem));
+  --header: 4.25rem;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2 {
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.16em;
+}
+
+a:hover {
+  color: var(--pine);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.5rem 0.75rem;
+  z-index: 5;
+}
+
+.skip:focus {
+  top: 0.75rem;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: var(--header);
+  padding: 0.75rem max(1.25rem, calc((100% - 1120px) / 2));
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.site-header nav {
+  margin-left: auto;
+}
+
+.site-header ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header nav a,
+.header-resume {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.header-resume {
+  border-bottom: 1px solid var(--ink);
+}
+
+main {
+  width: var(--page);
+  margin: 0 auto;
+  padding-bottom: 5rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.8fr);
+  gap: 3.5rem;
+  align-items: end;
+  padding: 4.5rem 0 3.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow,
+.index,
+.when,
+.record dt,
+.status,
+.filter-status,
+.cap-list,
+.skill-items {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0.4rem 0 1rem;
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 5.4vw, 4.35rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.lede,
+.section-intro {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--ink);
+}
+
+.lede {
+  font-size: 1.08rem;
+}
+
+.hero-links,
+.study-links,
+.contact-list,
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+}
+
+.hero-links {
+  margin-top: 1.5rem;
+}
+
+.hero-links a,
+.project-actions a,
+.study-links a,
+.contact-list a {
+  font-weight: 500;
+}
+
+.record {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.record > div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.record dt {
+  margin: 0;
+}
+
+.record dd {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 0;
+}
+
+.record dd span:first-child {
+  font-weight: 500;
+}
+
+.record-meta {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.live-mark {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--pine);
+  box-shadow: 0 0 0 3px var(--pine-soft);
+}
+
+.section,
+.hero,
+.project {
+  scroll-margin-top: 5.5rem;
+}
+
+.section {
+  padding: 4.5rem 0 0;
+}
+
+.section-head {
+  max-width: 40rem;
+  margin-bottom: 2rem;
+}
+
+.section-head h2,
+.role h3,
+.approach-list h3,
+.skill h3,
+.project-title h3 {
+  letter-spacing: -0.03em;
+}
+
+.section-head h2 {
+  margin: 0.35rem 0 0.8rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.filters button,
+.role button,
+.earlier > button,
+.project-actions button {
+  appearance: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.filters button {
+  min-height: 2.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 0.85rem;
+}
+
+.filters button[aria-pressed="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.filter-status {
+  margin: 0 0 1.25rem;
+}
+
+.project {
+  padding: 1.6rem 0 1.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.project-list {
+  border-bottom: 1px solid var(--line);
+}
+
+.project-top {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.project-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.project-title h3 {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  text-align: right;
+}
+
+.sentence {
+  margin: 0.45rem 0 0.35rem;
+  font-size: 1.08rem;
+}
+
+.problem {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--muted);
+}
+
+.cap-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-actions {
+  margin: 1rem 0 0 4.2rem;
+}
+
+.project-actions button {
+  font-weight: 600;
+  border-bottom-color: var(--ink);
+}
+
+.study {
+  margin: 1.25rem 0 0.4rem 4.2rem;
+  padding: 1.25rem 0 0.25rem;
+  border-top: 1px solid var(--ink);
+}
+
+.study h4,
+.scripts h3,
+.education h3 {
+  margin: 1.1rem 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.study h4:first-child {
+  margin-top: 0;
+}
+
+.study p,
+.study li,
+.skill p,
+.role li,
+.timeline p,
+.education span {
+  max-width: 70ch;
+}
+
+.study-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 2.5rem;
+}
+
+.study ul,
+.role ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.study li + li,
+.role li + li,
+.stack li + li {
+  margin-top: 0.45rem;
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flow li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: none;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.flow li:not(:last-child)::after {
+  content: "→";
+  color: var(--muted);
+}
+
+.scripts {
+  margin-top: 2.5rem;
+}
+
+.scripts > p {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+.scripts ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.scripts li {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.scripts a {
+  font-weight: 600;
+}
+
+.skill-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3rem;
+}
+
+.skill {
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.skill h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.skill-items {
+  margin: 0.35rem 0;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.skill p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+
+.role-current {
+  padding-top: 0.5rem;
+}
+
+.role header h3 {
+  margin: 0.15rem 0;
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+
+.org {
+  margin: 0 0 0.8rem;
+  color: var(--muted);
+}
+
+.role button,
+.earlier > button {
+  margin-top: 1rem;
+  font-weight: 600;
+  border-bottom-color: var(--ink);
+}
+
+.timeline {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.timeline li {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.timeline h3 {
+  margin: 0.15rem 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.education {
+  margin-top: 2.5rem;
+}
+
+.education ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.education li {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem 2rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.education span {
+  color: var(--muted);
+}
+
+.approach-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.approach-list li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.approach-list span {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  padding-top: 0.35rem;
+}
+
+.approach-list h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.approach-list p {
+  margin: 0;
+  max-width: 68ch;
+}
+
+.contact-list {
+  margin: 0;
+  padding: 1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.contact-list a {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.colophon {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .hero,
+  .study-grid,
+  .skill-list,
+  .scripts li,
+  .education li {
+    grid-template-columns: 1fr;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .site-header nav {
+    order: 3;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .hero {
+    gap: 2rem;
+    padding-top: 2.4rem;
+  }
+
+  h1 {
+    max-width: 12ch;
+  }
+
+  .project-top,
+  .approach-list li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .project-actions,
+  .study {
+    margin-left: 0;
+  }
+
+  .project-title {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .status {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
