@@ -1,4 +1,11 @@
+import type { MouseEvent } from "react";
 import { profile, record } from "../content/profile";
+
+function follow(event: MouseEvent<HTMLAnchorElement>) {
+  if (window.location.hash !== event.currentTarget.hash) return;
+  event.preventDefault();
+  window.dispatchEvent(new Event("hashchange"));
+}
 
 export function Hero() {
   return (
@@ -17,22 +24,31 @@ export function Hero() {
           <a href={profile.github}>GitHub</a>
         </p>
       </div>
-      <dl className="record" aria-label="Current record">
-        {record.map((row) => (
-          <div key={row.label}>
-            <dt>{row.label}</dt>
-            <dd>
-              <span>{row.detail}</span>
-              <span className="record-meta">
-                {"live" in row && row.live ? (
-                  <span className="live-mark" aria-hidden="true" />
-                ) : null}
-                {row.meta}
+      <div className="record" aria-label="Current record">
+        {record.map((row) => {
+          const body = (
+            <>
+              <span className="record-label">{row.label}</span>
+              <span className="record-line">
+                <span>{row.detail}</span>
+                <span className="record-meta">
+                  {"live" in row && row.live ? (
+                    <span className="live-mark" aria-hidden="true" />
+                  ) : null}
+                  {row.meta}
+                </span>
               </span>
-            </dd>
-          </div>
-        ))}
-      </dl>
+            </>
+          );
+          return "href" in row ? (
+            <a key={row.label} href={row.href} onClick={follow}>
+              {body}
+            </a>
+          ) : (
+            <div key={row.label}>{body}</div>
+          );
+        })}
+      </div>
     </section>
   );
 }

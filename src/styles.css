@@ -135,7 +135,7 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.8fr);
   gap: 3.5rem;
-  align-items: end;
+  align-items: start;
   padding: 4.5rem 0 3.5rem;
   border-bottom: 1px solid var(--line);
 }
@@ -143,7 +143,7 @@ main {
 .eyebrow,
 .index,
 .when,
-.record dt,
+.record-label,
 .status,
 .filter-status,
 .cap-list,
@@ -200,26 +200,27 @@ h1 {
   border-top: 1px solid var(--ink);
 }
 
+.record > a,
 .record > div {
   display: grid;
   gap: 0.2rem;
   padding: 0.85rem 0;
   border-bottom: 1px solid var(--line);
+  text-decoration: none;
 }
 
-.record dt {
-  margin: 0;
+.record > a:hover .record-line > span:first-child {
+  color: var(--pine);
 }
 
-.record dd {
+.record-line {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
-  margin: 0;
 }
 
-.record dd span:first-child {
+.record-line > span:first-child {
   font-weight: 500;
 }
 

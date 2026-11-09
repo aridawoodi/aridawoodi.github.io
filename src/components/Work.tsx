@@ -83,13 +83,33 @@ export function Work() {
     (project) => filter === "All" || project.capabilities.includes(filter),
   );
 
+  const [hashTick, setHashTick] = useState(0);
+
   useEffect(() => {
-    const id = window.location.hash.replace("#", "");
-    if (projects.some((project) => project.id === id)) {
-      setOpenId(id);
+    function openFromHash() {
+      const id = window.location.hash.replace("#", "");
+      if (!projects.some((project) => project.id === id)) return;
       setFilter("All");
+      setOpenId(id);
+      setHashTick((tick) => tick + 1);
     }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
   }, []);
+
+  useEffect(() => {
+    if (hashTick === 0) return;
+    const id = window.location.hash.replace("#", "");
+    const project = document.getElementById(id);
+    if (!project) return;
+    project.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
+  }, [hashTick]);
 
   function toggle(project: Project) {
     const next = openId === project.id ? null : project.id;
