@@ -9,7 +9,7 @@ export const profile = {
   github: "https://github.com/aridawoodi",
   resume: "/Ari_Dawoodi_Resume.pdf",
   headline: "I build applications, data paths, and the delivery around them.",
-  lede: "At Asurion since 2021 I work in two kinds of systems: custom workflow applications on AWS, and Power Platform apps that stay inside Microsoft’s security model. I shipped TableEdge, a restaurant operations product, and a local-AI assistant for job applications.",
+  lede: "At Asurion since 2021 I work in two kinds of systems: custom workflow applications on AWS, and Power Platform apps that stay inside Microsoft’s security model. I also shipped TableEdge and TableLoop for restaurants, TeaChat for team chat, Cashroll for rental portfolios, and a local-AI assistant for job applications.",
 } as const;
 
 export const record = [

@@ -65,6 +65,190 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "tableloop",
+    name: "TableLoop",
+    status: "Shipped",
+    live: true,
+    sentence:
+      "A restaurant reservations and marketing app I shipped, so bookings, guests, and campaigns live in one place.",
+    problem:
+      "Reservations, the guest list, and marketing usually sit in separate tools, so the booking and the campaign that led to it never meet.",
+    does: "TableLoop is a multi-tenant web app for reservations, guest profiles, email automations, rewards, and Wi-Fi signup. A visit can be tied back to the campaign that brought the guest in.",
+    contribution:
+      "I built TableLoop and shipped it. It is live at tableloop.io. The source is private.",
+    capabilities: ["Applications", "Automation", "Cloud", "AI"],
+    stack: [
+      {
+        name: "JavaScript, React, and Next.js",
+        why: "The screens and the route handlers live in one Next.js app, including reservations, messaging, billing, and the connections to other systems.",
+      },
+      {
+        name: "Supabase PostgreSQL",
+        why: "Restaurants, guests, reservations, and campaigns sit in Postgres. The test suite includes a tenant-isolation check.",
+      },
+      {
+        name: "Vercel",
+        why: "The production build runs on Vercel, where the runtime secrets are. GitHub Actions runs lint and tests on every push.",
+      },
+      {
+        name: "Stripe",
+        why: "Stripe handles billing and connected payments for a restaurant.",
+      },
+    ],
+    flow: [
+      "Reservation, walk-in, or campaign",
+      "Guest profile",
+      "Supabase Postgres",
+      "Rewards, email, and Wi-Fi",
+      "Visit tied back to the campaign",
+    ],
+    decisions: [
+      "CI on every push runs lint and the test suite, including tenant isolation. Vercel runs the production build with the real secrets, so Actions does not need a second build with placeholders.",
+      "Tokens for connected accounts are encrypted before they are stored.",
+      "Menu studio and event proposals can draft with Claude. Reservations, billing, and guest records stay in the application code.",
+    ],
+    implemented: [
+      "Reservations, guest profiles, segments, and email automations.",
+      "Rewards, vouchers, and Wi-Fi guest capture.",
+      "Campaign attribution back to the visit, covered by tests.",
+      "Menu studio and private-event proposals, including Claude-backed drafting.",
+      "Stripe billing.",
+      "Public site at tableloop.io.",
+    ],
+    links: [
+      { label: "tableloop.io", href: "https://www.tableloop.io" },
+      {
+        label: "Email for the source",
+        href: "mailto:aridawoodii@gmail.com?subject=TableLoop%20source",
+      },
+    ],
+  },
+  {
+    id: "teachat",
+    name: "TeaChat",
+    status: "Shipped",
+    live: true,
+    sentence:
+      "A team chat and project-board app I shipped for the web, iPhone, and Android.",
+    problem:
+      "A small team ends up with messages in one product and the board in another, and the two drift apart.",
+    does: "TeaChat is one workspace for channels, direct messages, threads, and boards with due dates, assignees, and checklists. The same workspace is on the web and in the iOS and Android apps.",
+    contribution:
+      "I built TeaChat and shipped it. The site is teachat.io, and the iOS app is on the App Store. The source is private.",
+    capabilities: ["Applications", "Cloud", "AI"],
+    stack: [
+      {
+        name: "One web app, then Capacitor",
+        why: "The product is a progressive web app. Capacitor wraps that same app for iOS and Android, so the three clients share the screens.",
+      },
+      {
+        name: "Supabase",
+        why: "Auth, Postgres, storage, and realtime sit in Supabase. Unread summaries go through an edge function, so the model key stays on the server.",
+      },
+      {
+        name: "LiveKit",
+        why: "Voice and video use LiveKit. On iPhone, an incoming call goes through CallKit. On Android, it opens a full-screen answer screen.",
+      },
+      {
+        name: "Claude",
+        why: "Spill the Tea summarizes unread messages. A Supabase function calls Claude, and the plan meters how often someone can use it.",
+      },
+    ],
+    flow: [
+      "Web, iPhone, or Android",
+      "Same workspace",
+      "Supabase",
+      "Messages and boards",
+      "Unread summary, on request",
+    ],
+    decisions: [
+      "One web codebase ships to the browser and to both app stores, instead of three separate interfaces.",
+      "The unread summary runs on the server. The app asks for it. The model key does not ship in the client.",
+      "Calling is native on each phone. The web app does not pretend to be the phone’s incoming-call screen.",
+    ],
+    implemented: [
+      "Channels, direct messages, threads, reactions, and file attachments.",
+      "Boards with due dates, assignees, labels, checklists, and a calendar of those dates.",
+      "Spill the Tea, a Claude summary of unread messages, gated by plan.",
+      "iOS and Android builds with push and calling.",
+      "Site at teachat.io and an App Store listing.",
+    ],
+    links: [
+      { label: "teachat.io", href: "https://teachat.io" },
+      {
+        label: "App Store",
+        href: "https://apps.apple.com/app/id6770593395",
+      },
+      {
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=io.teachat.app",
+      },
+      {
+        label: "Email for the source",
+        href: "mailto:aridawoodii@gmail.com?subject=TeaChat%20source",
+      },
+    ],
+  },
+  {
+    id: "cashroll",
+    name: "Cashroll",
+    status: "In use",
+    live: true,
+    sentence:
+      "A rental portfolio app I built for profit and loss, cash flow after debt, and a tax summary that matches the screen.",
+    problem:
+      "Rental income, expenses, and debt usually live in spreadsheets, and a tax export can disagree with the numbers on the screen.",
+    does: "Cashroll tracks properties, rent, expenses, short-term bookings, and cash flow after debt. The tax summary is built from the same figures as the on-screen Schedule E view.",
+    contribution:
+      "I built Cashroll and use it for a 14-property Nashville portfolio. The site is cashroll.ai. Checkout is built, and it does not charge anyone until live Stripe keys are turned on. The source is private.",
+    capabilities: ["Applications", "Data", "AI"],
+    stack: [
+      {
+        name: "One HTML app, plus the public site",
+        why: "The working portfolio is a single web app on Supabase. The marketing pages, the DSCR calculator, and the privacy pages are a separate site.",
+      },
+      {
+        name: "Supabase PostgreSQL",
+        why: "Properties, units, transactions, bookings, and settings are in Postgres, with realtime updates when more than one person has the portfolio open.",
+      },
+      {
+        name: "A tested tax engine",
+        why: "Schedule E totals are computed in one engine. Tests require the on-screen summary, the per-property breakdown, and the exported lines to be the same number.",
+      },
+      {
+        name: "Claude, behind a server function",
+        why: "Ask Zalaa answers questions about the portfolio and can turn a receipt into a transaction. The function holds the model key, checks workspace membership, and meters use by plan.",
+      },
+    ],
+    flow: [
+      "Spreadsheet or receipt",
+      "Import",
+      "Supabase",
+      "Profit and loss, cash flow after debt",
+      "Tax summary that matches the screen",
+    ],
+    decisions: [
+      "The tax figures have one path. A disagreement between the screen and the export fails the test, because those numbers have to add up.",
+      "The model is called from a Supabase function. The HTML app sends the question and the workspace. It does not carry the key.",
+      "Stripe checkout and the store webhook are in the project. They fail closed until the live keys exist, so the portfolio I use is not waiting on billing.",
+    ],
+    implemented: [
+      "Properties, rent roll, transactions, short-term bookings, and cash flow after debt.",
+      "A Schedule E summary and a per-property export that tests keep in agreement.",
+      "Ask Zalaa for portfolio questions and receipt import.",
+      "Google sign-in on the public site.",
+      "Checkout code that does not charge until live Stripe keys are set.",
+      "Public site at cashroll.ai.",
+    ],
+    links: [
+      { label: "cashroll.ai", href: "https://cashroll.ai" },
+      {
+        label: "Email for the source",
+        href: "mailto:aridawoodii@gmail.com?subject=Cashroll%20source",
+      },
+    ],
+  },
+  {
     id: "job-assistant",
     name: "AI Job Application Assistant",
     status: "Shipped",
