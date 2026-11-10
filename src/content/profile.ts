@@ -9,7 +9,7 @@ export const profile = {
   github: "https://github.com/aridawoodi",
   resume: "/Ari_Dawoodi_Resume.pdf",
   headline: "I build applications, data paths, and the delivery around them.",
-  lede: "At Asurion since 2021 I work in two kinds of systems: custom workflow applications on AWS, and Power Platform apps that stay inside Microsoft’s security model. I also shipped TableEdge and TableLoop for restaurants, TeaChat for team chat, Cashroll for rental portfolios, and a local-AI assistant for job applications.",
+  lede: "At Asurion since 2021 I work in two kinds of systems: custom workflow applications on AWS, and Power Platform apps that stay inside Microsoft’s security model. Customers use TableEdge, TableLoop, and TeaChat. The Chrome assistant I published for job applications has more than 500 users.",
 } as const;
 
 export const record = [
@@ -21,35 +21,36 @@ export const record = [
   {
     label: "TableEdge",
     detail: "Restaurant operations product",
-    meta: "Shipped",
+    meta: "Customers",
     live: true,
     href: "#tableedge",
   },
   {
     label: "TableLoop",
     detail: "Reservations and marketing",
-    meta: "Shipped",
+    meta: "Customers",
     live: true,
     href: "#tableloop",
   },
   {
     label: "TeaChat",
     detail: "Team chat and boards",
-    meta: "App Store",
+    meta: "Customers",
     live: true,
     href: "#teachat",
   },
   {
     label: "Cashroll",
     detail: "Rental portfolio",
-    meta: "In use",
+    meta: "Shipped",
     live: true,
     href: "#cashroll",
   },
   {
     label: "Job assistant",
     detail: "Chrome extension, on-device AI",
-    meta: "Web Store",
+    meta: "500+ users",
+    live: true,
     href: "#job-assistant",
   },
   {

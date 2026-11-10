@@ -7,12 +7,12 @@ export const projects: Project[] = [
     status: "Shipped",
     live: true,
     sentence:
-      "A restaurant operations app I shipped for administration, sales tracking, and cost and EBITDA reporting.",
+      "A restaurant operations app I shipped. Customers use it for administration, sales tracking, and cost and EBITDA reporting.",
     problem:
       "A restaurant’s sales, cost, and accounting numbers start in different products. Staff end up reconciling them by hand.",
     does: "TableEdge is a multi-tenant web app. It pulls point-of-sale and accounting data into one place for administration, sales tracking, and cost and EBITDA reporting.",
     contribution:
-      "I built TableEdge and shipped it. It is live at tableedge.io, with one paying restaurant customer. I designed the agent flows through prompt work with Claude. The source is private.",
+      "I built TableEdge and shipped it. It is live at tableedge.io, and customers use it. I designed the agent flows through prompt work with Claude. The source is private.",
     capabilities: ["Applications", "Data", "Cloud", "Automation", "AI"],
     stack: [
       {
@@ -70,12 +70,12 @@ export const projects: Project[] = [
     status: "Shipped",
     live: true,
     sentence:
-      "A restaurant reservations and marketing app I shipped, so bookings, guests, and campaigns live in one place.",
+      "A restaurant reservations and marketing app I shipped. Customers use it for bookings, guests, and campaigns.",
     problem:
       "Reservations, the guest list, and marketing usually sit in separate tools, so the booking and the campaign that led to it never meet.",
     does: "TableLoop is a multi-tenant web app for reservations, guest profiles, email automations, rewards, and Wi-Fi signup. A visit can be tied back to the campaign that brought the guest in.",
     contribution:
-      "I built TableLoop and shipped it. It is live at tableloop.io. The source is private.",
+      "I built TableLoop and shipped it. It is live at tableloop.io, and customers use it. The source is private.",
     capabilities: ["Applications", "Automation", "Cloud", "AI"],
     stack: [
       {
@@ -129,12 +129,12 @@ export const projects: Project[] = [
     status: "Shipped",
     live: true,
     sentence:
-      "A team chat and project-board app I shipped for the web, iPhone, and Android.",
+      "A team chat and project-board app I shipped for the web, iPhone, and Android. Customers use it.",
     problem:
       "A small team ends up with messages in one product and the board in another, and the two drift apart.",
     does: "TeaChat is one workspace for channels, direct messages, threads, and boards with due dates, assignees, and checklists. The same workspace is on the web and in the iOS and Android apps.",
     contribution:
-      "I built TeaChat and shipped it. The site is teachat.io, and the iOS app is on the App Store. The source is private.",
+      "I built TeaChat and shipped it. Customers use it on the web and on the App Store. The source is private.",
     capabilities: ["Applications", "Cloud", "AI"],
     stack: [
       {
@@ -192,7 +192,7 @@ export const projects: Project[] = [
   {
     id: "cashroll",
     name: "Cashroll",
-    status: "In use",
+    status: "Shipped",
     live: true,
     sentence:
       "A rental portfolio app I built for profit and loss, cash flow after debt, and a tax summary that matches the screen.",
@@ -254,12 +254,12 @@ export const projects: Project[] = [
     status: "Shipped",
     live: true,
     sentence:
-      "A free Chrome extension that fills applications and drafts writing with AI that stays on the computer.",
+      "A free Chrome extension that fills applications and drafts writing with AI that stays on the computer. More than 500 people use it.",
     problem:
       "Most application tools give away autofill and charge for the writing, because the model runs on their server and the resume leaves the machine.",
     does: "It builds a profile from a PDF or Word resume, fills supported application forms, drafts open-ended answers, tailors the resume, and writes cover letters. It never presses Submit.",
     contribution:
-      "I built it and published it. It is free, MIT licensed, and on the Chrome Web Store. A separate desktop version, using Electron and Playwright, is still in progress.",
+      "I built it and published it. More than 500 people use it. It is free, MIT licensed, and on the Chrome Web Store. A separate desktop version, using Electron and Playwright, is still in progress.",
     capabilities: ["Applications", "Automation", "AI"],
     stack: [
       {
