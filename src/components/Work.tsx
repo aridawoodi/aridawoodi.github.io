@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { projects, scripts } from "../content/projects";
 import { filters, type Filter, type Project } from "../content/types";
+import { MermaidDiagram } from "./MermaidDiagram";
 
 function external(href: string) {
   return href.startsWith("http");
@@ -37,6 +38,12 @@ function CaseStudy({ project }: { project: Project }) {
               <li key={step}>{step}</li>
             ))}
           </ol>
+          {project.diagram ? (
+            <MermaidDiagram
+              chart={project.diagram}
+              title={`${project.name} system diagram`}
+            />
+          ) : null}
         </div>
       ) : null}
       <div className="study-grid">
