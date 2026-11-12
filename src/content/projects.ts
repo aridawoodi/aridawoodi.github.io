@@ -134,6 +134,33 @@ export const projects: Project[] = [
       "Rewards, email, and Wi-Fi",
       "Visit tied back to the campaign",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    Entry["Reservation, walk-in, or campaign"]
+    Views["Rewards, email, and Wi-Fi"]
+  end
+
+  subgraph API["API"]
+    App["Next.js app"]
+    Claude["Claude drafting"]
+  end
+
+  subgraph Data["Data"]
+    DB[("Supabase Postgres")]
+    Guest["Guest profile"]
+  end
+
+  subgraph Integrations["Integrations"]
+    Stripe["Stripe"]
+  end
+
+  Entry --> Guest
+  Guest --> DB
+  DB --> App
+  App --> Views
+  Views --> Guest
+  Stripe -.-> App
+  Claude -.-> App`,
     decisions: [
       "CI on every push runs lint and the test suite, including tenant isolation. Vercel runs the production build with the real secrets, so Actions does not need a second build with placeholders.",
       "Tokens for connected accounts are encrypted before they are stored.",
@@ -193,6 +220,36 @@ export const projects: Project[] = [
       "Messages and boards",
       "Unread summary, on request",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    direction LR
+    Web["Web"]
+    iOS["iPhone"]
+    Android["Android"]
+  end
+
+  subgraph API["API"]
+    Workspace["Same workspace"]
+    Edge["Supabase edge function"]
+  end
+
+  subgraph Data["Data"]
+    SB[("Supabase")]
+  end
+
+  subgraph Integrations["Integrations"]
+    LiveKit["LiveKit"]
+    Claude["Claude"]
+  end
+
+  Web --> Workspace
+  iOS --> Workspace
+  Android --> Workspace
+  Workspace --> SB
+  SB --> Workspace
+  Workspace --> Edge
+  Edge -.-> Claude
+  LiveKit -.-> Workspace`,
     decisions: [
       "One web codebase ships to the browser and to both app stores, instead of three separate interfaces.",
       "The unread summary runs on the server. The app asks for it. The model key does not ship in the client.",
@@ -259,6 +316,36 @@ export const projects: Project[] = [
       "Profit and loss, cash flow after debt",
       "Tax summary that matches the screen",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    Source["Spreadsheet or receipt"]
+    Views["Profit and loss, cash flow after debt"]
+    Tax["Tax summary that matches the screen"]
+  end
+
+  subgraph API["API"]
+    Import["Import"]
+    TaxEngine["Tax engine"]
+    Zalaa["Ask Zalaa function"]
+  end
+
+  subgraph Data["Data"]
+    DB[("Supabase Postgres")]
+  end
+
+  subgraph Integrations["Integrations"]
+    Claude["Claude"]
+    Stripe["Stripe"]
+  end
+
+  Source --> Import
+  Import --> DB
+  DB --> Views
+  Views --> TaxEngine
+  TaxEngine --> Tax
+  Zalaa -.-> Claude
+  Zalaa -.-> DB
+  Stripe -.-> Import`,
     decisions: [
       "The tax figures have one path. A disagreement between the screen and the export fails the test, because those numbers have to add up.",
       "The model is called from a Supabase function. The HTML app sends the question and the workspace. It does not carry the key.",
@@ -318,6 +405,33 @@ export const projects: Project[] = [
       "Fact check",
       "Filled form, still unsubmitted",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    Resume["Resume on the computer"]
+    Profile["Profile in the browser"]
+    Form["Filled form, still unsubmitted"]
+  end
+
+  subgraph API["API"]
+    Extension["Chrome extension"]
+    FactCheck["Fact check"]
+  end
+
+  subgraph Data["Data"]
+    LocalStore["Browser storage"]
+  end
+
+  subgraph Integrations["Integrations"]
+    Model["Chrome built-in model or Ollama"]
+  end
+
+  Resume --> Extension
+  Extension --> Profile
+  Profile --> LocalStore
+  LocalStore --> Extension
+  Extension --> Model
+  Model --> FactCheck
+  FactCheck --> Form`,
     decisions: [
       "Ollama rejects browser extension origins. The extension installs a declarativeNetRequest rule that removes the Origin header only on its own requests to the configured local address. Other websites stay blocked, and a manual fallback remains for unusual setups.",
       "Tailoring may reword what is already true. Suggested employers, titles, dates, numbers, and tools that are not on the resume are blocked, and the person approves the change. Equal-opportunity questions are never filled by the model.",
@@ -384,6 +498,29 @@ export const projects: Project[] = [
       "Subscription update",
       "Shared scoreboard",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    SwiftUI["SwiftUI client"]
+    Board["Shared scoreboard"]
+  end
+
+  subgraph API["API"]
+    Auth["Cognito or guest"]
+    AppSync["AppSync GraphQL"]
+    Sub["Subscription update"]
+  end
+
+  subgraph Data["Data"]
+    GameState[("Game state")]
+    S3["S3 assets"]
+  end
+
+  SwiftUI --> Auth
+  Auth --> AppSync
+  AppSync --> GameState
+  GameState --> Sub
+  Sub --> Board
+  S3 -.-> SwiftUI`,
     decisions: [
       "Guest play and registered profiles are both first-class. A game should be joinable before someone decides to create an account.",
       "Realtime is a subscription on the game, not a timer that refetches the whole board.",
@@ -442,6 +579,35 @@ export const projects: Project[] = [
       "Grounded answer",
       "Sources on screen",
     ],
+    diagram: `flowchart TB
+  subgraph Client["Client"]
+    Question["Question"]
+    Sources["Sources on screen"]
+  end
+
+  subgraph API["API"]
+    Validate["API validation"]
+    Answer["Grounded answer"]
+  end
+
+  subgraph Data["Data"]
+    Local["Local excerpts"]
+    Search["Azure hybrid search"]
+  end
+
+  subgraph Integrations["Integrations"]
+    OpenAI["Azure OpenAI"]
+    Entra["Entra ID"]
+  end
+
+  Question --> Validate
+  Validate --> Local
+  Validate --> Search
+  Local --> Answer
+  Search --> OpenAI
+  OpenAI --> Answer
+  Answer --> Sources
+  Entra -.-> Validate`,
     decisions: [
       "Local mode returns the exact passages, so I can show the path without an Azure account. Azure mode runs hybrid search and writes the answer from those passages.",
       "Sign-in and the model are separate. A local demo can run without login. The server will not start a public deployment with authentication off.",
