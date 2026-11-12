@@ -32,6 +32,8 @@ export type Project = {
   capabilities: Capability[];
   stack: StackNote[];
   flow?: string[];
+  /** Mermaid source for a system diagram. Shown under Path through the system. */
+  diagram?: string;
   decisions: string[];
   implemented: string[];
   links: ProjectLink[];

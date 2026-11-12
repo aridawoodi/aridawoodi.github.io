@@ -43,6 +43,38 @@ export const projects: Project[] = [
       "Next.js app",
       "Sales, cost, and EBITDA views",
     ],
+    diagram: `flowchart TB
+  subgraph Integrations["Integrations"]
+    direction LR
+    Toast["Toast"]
+    Square["Square"]
+    QB["QuickBooks"]
+    Stripe["Stripe"]
+    Plaid["Plaid"]
+  end
+
+  subgraph API["API"]
+    direction LR
+    Routes["Integration routes"]
+    App["Next.js app"]
+  end
+
+  subgraph Data["Data"]
+    DB[("Supabase Postgres")]
+  end
+
+  subgraph Client["Client"]
+    Views["Sales, cost, and EBITDA views"]
+  end
+
+  Toast --> Routes
+  Square --> Routes
+  QB --> Routes
+  Routes --> DB
+  DB --> App
+  App --> Views
+  Stripe -.-> App
+  Plaid -.-> App`,
     decisions: [
       "One TypeScript application owns both the screens and the request handlers, so permission rules are checked in the same repository as the interface.",
       "On pull requests, CI runs lint, a typecheck, middleware coverage, API permission checks, a secret scan, unit tests, and a production build. I run the dependency audit on the way to main, and weekly.",
