@@ -34,6 +34,8 @@ export type Project = {
   flow?: string[];
   /** Mermaid source for a system diagram. Shown under Path through the system. */
   diagram?: string;
+  /** Optional heading for the diagram. Defaults to "System diagram". */
+  diagramTitle?: string;
   decisions: string[];
   implemented: string[];
   links: ProjectLink[];

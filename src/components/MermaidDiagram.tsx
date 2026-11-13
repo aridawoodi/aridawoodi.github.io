@@ -29,14 +29,15 @@ async function loadMermaid() {
         titleColor: "#1a1d19",
         edgeLabelBackground: "#fcfcfb",
         fontFamily: '"IBM Plex Sans", "Segoe UI", sans-serif',
-        fontSize: "14px",
+        fontSize: "13px",
       },
       flowchart: {
         curve: "basis",
-        padding: 12,
+        padding: 10,
         htmlLabels: true,
-        nodeSpacing: 28,
-        rankSpacing: 40,
+        nodeSpacing: 24,
+        rankSpacing: 36,
+        useMaxWidth: true,
       },
     });
     configured = true;
@@ -47,9 +48,14 @@ async function loadMermaid() {
 type MermaidDiagramProps = {
   chart: string;
   title: string;
+  heading?: string;
 };
 
-export function MermaidDiagram({ chart, title }: MermaidDiagramProps) {
+export function MermaidDiagram({
+  chart,
+  title,
+  heading = "System diagram",
+}: MermaidDiagramProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const reactId = useId().replace(/:/g, "");
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -95,7 +101,7 @@ export function MermaidDiagram({ chart, title }: MermaidDiagramProps) {
 
   return (
     <div className="system-diagram">
-      <h4>System diagram</h4>
+      <h4>{heading}</h4>
       <div
         ref={hostRef}
         className="mermaid-host"

@@ -44,37 +44,60 @@ export const projects: Project[] = [
       "Sales, cost, and EBITDA views",
     ],
     diagram: `flowchart TB
-  subgraph Integrations["Integrations"]
-    direction LR
-    Toast["Toast"]
-    Square["Square"]
-    QB["QuickBooks"]
-    Stripe["Stripe"]
-    Plaid["Plaid"]
+  Owner((Restaurant operator))
+
+  subgraph AppShell["TableEdge app"]
+    Dash["Dashboard<br/>[dashboard-client.tsx]"]
+    BudgetUI["Budget<br/>[budget-client.tsx]"]
+    HealthUI["Data health<br/>[data-health-client.tsx]"]
+    DocsUI["Documents<br/>[documents-client.tsx]"]
+    ComplianceUI["Compliance<br/>[compliance-client.tsx]"]
+    IntegUI["Integrations UI<br/>[integrations-client.tsx]"]
   end
 
-  subgraph API["API"]
-    direction LR
-    Routes["Integration routes"]
-    App["Next.js app"]
+  subgraph API["API and sync"]
+    MW["Middleware<br/>[middleware.ts]"]
+    ToastSync["Toast sync<br/>[api/pos/toast-sync]"]
+    SquareSync["Square sync<br/>[api/pos/square/sync]"]
+    QBSync["QuickBooks sync<br/>[api/accounting/quickbooks/sync]"]
+    PlaidSync["Plaid sync<br/>[api/bank/plaid/sync]"]
+    StripeAPI["Stripe checkout<br/>[api/stripe/checkout]"]
   end
 
   subgraph Data["Data"]
     DB[("Supabase Postgres")]
   end
 
-  subgraph Client["Client"]
-    Views["Sales, cost, and EBITDA views"]
+  subgraph Integrations["Integrations"]
+    Toast["Toast"]
+    Square["Square"]
+    QB["QuickBooks"]
+    Plaid["Plaid"]
+    Stripe["Stripe"]
   end
 
-  Toast --> Routes
-  Square --> Routes
-  QB --> Routes
-  Routes --> DB
-  DB --> App
-  App --> Views
-  Stripe -.-> App
-  Plaid -.-> App`,
+  Owner -->|uses| Dash
+  Dash --> BudgetUI
+  Dash --> HealthUI
+  Dash --> DocsUI
+  Dash --> ComplianceUI
+  Owner -->|connects sources| IntegUI
+  IntegUI -->|requests actions| MW
+  MW --> ToastSync
+  MW --> SquareSync
+  MW --> QBSync
+  MW --> PlaidSync
+  MW --> StripeAPI
+  Toast -->|sales and labor| ToastSync
+  Square -->|POS sales| SquareSync
+  QB -->|accounting| QBSync
+  Plaid -->|bank accounts| PlaidSync
+  Stripe -.->|billing| StripeAPI
+  ToastSync --> DB
+  SquareSync --> DB
+  QBSync --> DB
+  PlaidSync --> DB
+  DB -->|powers reports| Dash`,
     decisions: [
       "One TypeScript application owns both the screens and the request handlers, so permission rules are checked in the same repository as the interface.",
       "On pull requests, CI runs lint, a typecheck, middleware coverage, API permission checks, a secret scan, unit tests, and a production build. I run the dependency audit on the way to main, and weekly.",
@@ -135,32 +158,52 @@ export const projects: Project[] = [
       "Visit tied back to the campaign",
     ],
     diagram: `flowchart TB
-  subgraph Client["Client"]
-    Entry["Reservation, walk-in, or campaign"]
-    Views["Rewards, email, and Wi-Fi"]
+  Host((Restaurant host))
+
+  subgraph AppShell["TableLoop app"]
+    AuthUI["Auth<br/>[Auth.js]"]
+    ResTab["Reservations<br/>[ReservationsTab.js]"]
+    GuestUI["Guest profile<br/>[GuestProfile.js]"]
+    Mkt["Marketing hub<br/>[MarketingHub.js]"]
+    AutoUI["Automations<br/>[Automations.js]"]
+    Seg["Segments<br/>[SegmentBuilder.js]"]
   end
 
   subgraph API["API"]
-    App["Next.js app"]
-    Claude["Claude drafting"]
+    ResAPI["Reservations API<br/>[api/reservations/*]"]
+    LoyAPI["Loyalty API<br/>[api/loyalty/*]"]
+    WifiAPI["Wi-Fi capture<br/>[api/wifi/*]"]
+    StripeAPI["Stripe Connect<br/>[api/stripe-connect/*]"]
+    MenuAI["Menu studio AI<br/>[api/menu-studio/ai/*]"]
   end
 
   subgraph Data["Data"]
     DB[("Supabase Postgres")]
-    Guest["Guest profile"]
   end
 
   subgraph Integrations["Integrations"]
     Stripe["Stripe"]
+    Claude["Claude"]
+    OT["OpenTable import"]
   end
 
-  Entry --> Guest
-  Guest --> DB
-  DB --> App
-  App --> Views
-  Views --> Guest
-  Stripe -.-> App
-  Claude -.-> App`,
+  Host -->|signs in| AuthUI
+  Host -->|books and seats| ResTab
+  ResTab -->|creates and transitions| ResAPI
+  ResAPI --> DB
+  DB --> GuestUI
+  GuestUI --> Seg
+  Seg --> Mkt
+  Mkt --> AutoUI
+  AutoUI --> LoyAPI
+  AutoUI --> WifiAPI
+  LoyAPI --> DB
+  WifiAPI --> DB
+  ResAPI -.->|deposits| StripeAPI
+  StripeAPI -->|charges| Stripe
+  MenuAI -->|drafts| Claude
+  OT -.->|imports bookings| ResAPI
+  DB -->|visit tied to campaign| Mkt`,
     decisions: [
       "CI on every push runs lint and the test suite, including tenant isolation. Vercel runs the production build with the real secrets, so Actions does not need a second build with placeholders.",
       "Tokens for connected accounts are encrypted before they are stored.",
@@ -221,20 +264,26 @@ export const projects: Project[] = [
       "Unread summary, on request",
     ],
     diagram: `flowchart TB
-  subgraph Client["Client"]
-    direction LR
-    Web["Web"]
-    iOS["iPhone"]
-    Android["Android"]
+  Member((Team member))
+
+  subgraph Clients["Clients"]
+    Web["Web app<br/>[web/app.html]"]
+    iOS["iOS shell<br/>[AppDelegate.swift]"]
+    And["Android shell<br/>[MainActivity.java]"]
   end
 
-  subgraph API["API"]
-    Workspace["Same workspace"]
-    Edge["Supabase edge function"]
+  subgraph Caps["Capacitor bridge"]
+    Cap["Capacitor<br/>[capacitor.config.ts]"]
+    CalliOS["CallKit bridge<br/>[TeaCallManager.swift]"]
+    CallAnd["Incoming call<br/>[IncomingCallActivity.java]"]
   end
 
-  subgraph Data["Data"]
-    SB[("Supabase")]
+  subgraph Backend["Supabase backend"]
+    DB[("Supabase Postgres + Realtime")]
+    Spill["Spill the Tea<br/>[spill-tea/index.ts]"]
+    LK["LiveKit token<br/>[livekit-token/index.ts]"]
+    Push["Push notify<br/>[notify-push/index.ts]"]
+    ClaudeFn["Claude connector<br/>[claude-connector/*]"]
   end
 
   subgraph Integrations["Integrations"]
@@ -242,14 +291,24 @@ export const projects: Project[] = [
     Claude["Claude"]
   end
 
-  Web --> Workspace
-  iOS --> Workspace
-  Android --> Workspace
-  Workspace --> SB
-  SB --> Workspace
-  Workspace --> Edge
-  Edge -.-> Claude
-  LiveKit -.-> Workspace`,
+  Member -->|opens workspace| Web
+  Member -->|opens workspace| iOS
+  Member -->|opens workspace| And
+  Web --> Cap
+  iOS --> Cap
+  And --> Cap
+  Cap -->|messages and boards| DB
+  DB -->|realtime updates| Cap
+  Cap -->|requests summary| Spill
+  Spill -->|calls model| Claude
+  Cap -->|starts call| LK
+  LK -->|issues token| LiveKit
+  iOS --> CalliOS
+  And --> CallAnd
+  CalliOS -.-> LiveKit
+  CallAnd -.-> LiveKit
+  DB --> Push
+  ClaudeFn -.->|board and chat tools| Claude`,
     decisions: [
       "One web codebase ships to the browser and to both app stores, instead of three separate interfaces.",
       "The unread summary runs on the server. The app asks for it. The model key does not ship in the client.",
@@ -317,16 +376,19 @@ export const projects: Project[] = [
       "Tax summary that matches the screen",
     ],
     diagram: `flowchart TB
-  subgraph Client["Client"]
-    Source["Spreadsheet or receipt"]
-    Views["Profit and loss, cash flow after debt"]
-    Tax["Tax summary that matches the screen"]
+  Owner((Portfolio owner))
+
+  subgraph AppShell["Cashroll app"]
+    WebApp["Portfolio app<br/>[site/app.html]"]
+    Site["Marketing site<br/>[site/index.html]"]
+    DSCR["DSCR calculator<br/>[site/dscr-calculator.html]"]
   end
 
-  subgraph API["API"]
-    Import["Import"]
-    TaxEngine["Tax engine"]
-    Zalaa["Ask Zalaa function"]
+  subgraph Functions["Supabase functions"]
+    Ask["Ask Zalaa<br/>[ask-zalaa/index.ts]"]
+    Tax["Tax engine<br/>[tax-engine/engine.js]"]
+    Checkout["Create checkout<br/>[create-checkout/index.ts]"]
+    StripeHook["Stripe webhook<br/>[stripe-webhook/index.ts]"]
   end
 
   subgraph Data["Data"]
@@ -338,14 +400,20 @@ export const projects: Project[] = [
     Stripe["Stripe"]
   end
 
-  Source --> Import
-  Import --> DB
-  DB --> Views
-  Views --> TaxEngine
-  TaxEngine --> Tax
-  Zalaa -.-> Claude
-  Zalaa -.-> DB
-  Stripe -.-> Import`,
+  Owner -->|manages portfolio| WebApp
+  Owner -->|reads product| Site
+  Owner -->|runs calculator| DSCR
+  WebApp -->|loads and saves| DB
+  WebApp -->|asks about portfolio| Ask
+  Ask -->|sends prompts| Claude
+  Ask --> DB
+  WebApp -->|builds Schedule E| Tax
+  Tax --> DB
+  Tax -->|same totals on screen and export| WebApp
+  WebApp -.->|starts billing| Checkout
+  Checkout -.-> Stripe
+  Stripe -.->|events| StripeHook
+  StripeHook --> DB`,
     decisions: [
       "The tax figures have one path. A disagreement between the screen and the export fails the test, because those numbers have to add up.",
       "The model is called from a Supabase function. The HTML app sends the question and the workspace. It does not carry the key.",
@@ -399,39 +467,76 @@ export const projects: Project[] = [
       },
     ],
     flow: [
-      "Resume on the computer",
-      "Profile in the browser",
-      "Local model",
-      "Fact check",
+      "Desktop UI and pipeline controls",
+      "Main coordinator over IPC",
+      "Search, match, and local AI",
+      "Browser-driven apply and tracker",
       "Filled form, still unsubmitted",
     ],
+    diagramTitle: "Desktop app system diagram",
     diagram: `flowchart TB
-  subgraph Client["Client"]
-    Resume["Resume on the computer"]
-    Profile["Profile in the browser"]
-    Form["Filled form, still unsubmitted"]
+  Seeker((Job seeker))
+
+  subgraph Desktop["Desktop shell"]
+    UI["Desktop UI<br/>[App.tsx]"]
+    Pipeline["Pipeline controls<br/>[PipelinePanel.tsx]"]
+    Preload["Desktop API<br/>[preload/index.ts]"]
+    Main["Main coordinator<br/>[electron/main/index.ts]"]
+    BrowserCtrl["Browser controller<br/>[browser-controller.ts]"]
   end
 
-  subgraph API["API"]
-    Extension["Chrome extension"]
-    FactCheck["Fact check"]
+  subgraph ProfileAI["Profile and AI"]
+    ProfileUI["Profile and resume UI<br/>[ProfilePanel.tsx]"]
+    ResumeImport["Resume import<br/>[resume/import.ts]"]
+    AiUI["AI assistance UI<br/>[AiAssistPanel.tsx]"]
+    Cover["AI writing assists<br/>[ai/cover.ts]"]
+    OllamaClient["Ollama client<br/>[ollama-client.ts]"]
   end
 
-  subgraph Data["Data"]
-    LocalStore["Browser storage"]
+  subgraph Discovery["Job discovery"]
+    Search["Multi-source search<br/>[search/index.ts]"]
+    Adapters["Search adapters<br/>LinkedIn / Indeed / Google"]
+    Match["Job matching<br/>[match/engine.ts]"]
+    Notify["Notifications<br/>[notify/index.ts]"]
   end
 
-  subgraph Integrations["Integrations"]
-    Model["Chrome built-in model or Ollama"]
+  subgraph ApplyFlow["Application flow"]
+    Apply["Application automation<br/>[apply/index.ts]"]
+    Fill["Form filling<br/>[apply/fill.ts]"]
+    Tracker["Application tracker<br/>[tracker/index.ts]"]
   end
 
-  Resume --> Extension
-  Extension --> Profile
-  Profile --> LocalStore
-  LocalStore --> Extension
-  Extension --> Model
-  Model --> FactCheck
-  FactCheck --> Form`,
+  subgraph LocalState["Local state"]
+    Prefs["Preferences store<br/>[preferences-store.ts]"]
+    ProfileStore["Profile store<br/>[profile-store.ts]"]
+    ImportExport["Profile import/export<br/>[import/index.ts]"]
+  end
+
+  Browser["Chrome or Edge"]
+  Ollama["Local Ollama"]
+
+  Seeker -->|uses| UI
+  UI -->|renders| Pipeline
+  Pipeline -->|requests actions| Preload
+  Preload -->|forwards IPC| Main
+  Main -->|renders| ProfileUI
+  ProfileUI -->|imports resume| ResumeImport
+  Main -->|renders| AiUI
+  AiUI -->|requests AI assists| Cover
+  Cover -->|calls| OllamaClient
+  OllamaClient -->|sends prompts| Ollama
+  Main -->|runs search| Search
+  Search -->|dispatches searches| Adapters
+  Main -->|runs matching| Match
+  Main -->|sends notifications| Notify
+  Main -->|runs apply| Apply
+  Apply -->|fills forms| Fill
+  Main -->|updates tracker| Tracker
+  Main -->|loads and saves| Prefs
+  Main -->|loads and saves| ProfileStore
+  Main -->|imports profiles| ImportExport
+  Main --> BrowserCtrl
+  BrowserCtrl -->|drives| Browser`,
     decisions: [
       "Ollama rejects browser extension origins. The extension installs a declarativeNetRequest rule that removes the Origin header only on its own requests to the configured local address. Other websites stay blocked, and a manual fallback remains for unusual setups.",
       "Tailoring may reword what is already true. Suggested employers, titles, dates, numbers, and tools that are not on the resume are blocked, and the person approves the change. Equal-opportunity questions are never filled by the model.",
@@ -499,28 +604,50 @@ export const projects: Project[] = [
       "Shared scoreboard",
     ],
     diagram: `flowchart TB
-  subgraph Client["Client"]
-    SwiftUI["SwiftUI client"]
-    Board["Shared scoreboard"]
+  Player((Player))
+
+  subgraph iOS["iOS app"]
+    App["App entry<br/>[ScoreBoardApp.swift]"]
+    Content["Root UI<br/>[ContentView.swift]"]
+    Create["Create game<br/>[CreateGameView.swift]"]
+    Join["Join game<br/>[JoinGameView.swift]"]
+    Board["Scoreboard<br/>[Scoreboardview.swift]"]
+    AuthUI["Sign in / guest<br/>[LoginView.swift]"]
+    GameVM["Game view model<br/>[GameViewModel.swift]"]
+    BoardVM["Scoreboard view model<br/>[ScoreboardViewModel.swift]"]
+    AuthVM["Auth view model<br/>[AuthenticationViewModel.swift]"]
   end
 
-  subgraph API["API"]
-    Auth["Cognito or guest"]
-    AppSync["AppSync GraphQL"]
-    Sub["Subscription update"]
+  subgraph Network["Network"]
+    GameSvc["Game service<br/>[GameService.swift]"]
+    Amplify["Amplify client<br/>[AmplifyClient.swift]"]
   end
 
-  subgraph Data["Data"]
-    GameState[("Game state")]
+  subgraph Cloud["AWS"]
+    Cognito["Amazon Cognito"]
+    AppSync["AWS AppSync GraphQL"]
     S3["S3 assets"]
   end
 
-  SwiftUI --> Auth
-  Auth --> AppSync
-  AppSync --> GameState
-  GameState --> Sub
-  Sub --> Board
-  S3 -.-> SwiftUI`,
+  Player -->|opens app| App
+  App --> Content
+  Content -->|creates| Create
+  Content -->|joins with code| Join
+  Content -->|shows live board| Board
+  Content -->|signs in or continues as guest| AuthUI
+  Create --> GameVM
+  Join --> GameVM
+  Board --> BoardVM
+  AuthUI --> AuthVM
+  GameVM --> GameSvc
+  BoardVM --> GameSvc
+  AuthVM --> Amplify
+  GameSvc --> Amplify
+  Amplify -->|accounts and sessions| Cognito
+  Amplify -->|queries and mutations| AppSync
+  AppSync -->|subscription update| BoardVM
+  BoardVM -->|shared scoreboard| Board
+  Amplify -.->|profile assets| S3`,
     decisions: [
       "Guest play and registered profiles are both first-class. A game should be joinable before someone decides to create an account.",
       "Realtime is a subscription on the game, not a timer that refetches the whole board.",
@@ -580,34 +707,40 @@ export const projects: Project[] = [
       "Sources on screen",
     ],
     diagram: `flowchart TB
+  Asker((Policy asker))
+
   subgraph Client["Client"]
-    Question["Question"]
-    Sources["Sources on screen"]
+    UI["Question UI<br/>[src/main.tsx]"]
+    AuthClient["Entra sign-in<br/>[src/auth.ts]"]
+    Redirect["Auth redirect<br/>[src/redirect.ts]"]
   end
 
   subgraph API["API"]
-    Validate["API validation"]
-    Answer["Grounded answer"]
+    Server["HTTP API<br/>[server/index.ts]"]
+    Auth["Token and role check<br/>[server/auth.ts]"]
+    Policies["Local passages<br/>[server/policies.ts]"]
+    RAG["Retrieval and answer<br/>[server/rag.ts]"]
   end
 
-  subgraph Data["Data"]
-    Local["Local excerpts"]
-    Search["Azure hybrid search"]
-  end
-
-  subgraph Integrations["Integrations"]
+  subgraph Azure["Azure"]
+    Search["Azure AI Search"]
     OpenAI["Azure OpenAI"]
     Entra["Entra ID"]
   end
 
-  Question --> Validate
-  Validate --> Local
-  Validate --> Search
-  Local --> Answer
-  Search --> OpenAI
-  OpenAI --> Answer
-  Answer --> Sources
-  Entra -.-> Validate`,
+  Asker -->|asks a question| UI
+  Asker -->|signs in when required| AuthClient
+  AuthClient --> Redirect
+  AuthClient -->|PKCE code flow| Entra
+  UI -->|POST question| Server
+  Server --> Auth
+  Auth -->|validates JWT and role| Entra
+  Server -->|local mode| Policies
+  Policies -->|exact excerpts| UI
+  Server -->|Azure mode| RAG
+  RAG -->|hybrid search| Search
+  RAG -->|grounded generation| OpenAI
+  RAG -->|answer plus sources| UI`,
     decisions: [
       "Local mode returns the exact passages, so I can show the path without an Azure account. Azure mode runs hybrid search and writes the answer from those passages.",
       "Sign-in and the model are separate. A local demo can run without login. The server will not start a public deployment with authentication off.",
