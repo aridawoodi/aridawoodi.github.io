@@ -41,7 +41,8 @@ function CaseStudy({ project }: { project: Project }) {
           {project.diagram ? (
             <MermaidDiagram
               chart={project.diagram}
-              title={`${project.name} system diagram`}
+              title={project.diagramTitle ?? `${project.name} system diagram`}
+              heading={project.diagramTitle ?? "System diagram"}
             />
           ) : null}
         </div>
